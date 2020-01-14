@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scripting", "Scripting\Scripting.csproj", "{76DAED05-5177-41B7-8C92-DA1C046CD537}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptingDemo", "ScriptingDemo\ScriptingDemo.csproj", "{BB034A0C-1505-42FF-AD70-679BE13B3CC1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{76DAED05-5177-41B7-8C92-DA1C046CD537}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76DAED05-5177-41B7-8C92-DA1C046CD537}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76DAED05-5177-41B7-8C92-DA1C046CD537}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76DAED05-5177-41B7-8C92-DA1C046CD537}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB034A0C-1505-42FF-AD70-679BE13B3CC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB034A0C-1505-42FF-AD70-679BE13B3CC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB034A0C-1505-42FF-AD70-679BE13B3CC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB034A0C-1505-42FF-AD70-679BE13B3CC1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {02192BD9-1B41-4DB1-875E-3487230112DF}
+	EndGlobalSection
+EndGlobal
