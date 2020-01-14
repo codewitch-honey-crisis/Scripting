@@ -37,7 +37,6 @@
     <Compile Include="ScriptEngine.cs" />
     <Compile Include="ScriptException.cs" />
     <Compile Include="ScriptHost.cs" />
-    <Compile Include="_ScriptHost.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
