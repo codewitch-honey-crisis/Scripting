@@ -10,13 +10,21 @@ namespace Scripting
 			EXCEPINFO e;
 			var ase = err as IActiveScriptError;
 			ase.GetExceptionInfo(out e);
-			string src;
-			ase.GetSourceLineText(out src);
+			string src=null;
+			try
+			{
+				ase.GetSourceLineText(out src);
+			}
+			catch { }
 			Code = src;
 			uint ctx;
-			uint lineNo;
-			int pos;
-			ase.GetSourcePosition(out ctx, out lineNo, out pos);
+			uint lineNo=unchecked((uint)-1);
+			int pos=0;
+			try
+			{
+				ase.GetSourcePosition(out ctx, out lineNo, out pos);
+			}
+			catch { }
 			ScriptSource = e.bstrSource;
 			Line = unchecked((int)lineNo) + 1;
 			Position = pos;

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.InteropServices.ComTypes;
 
 namespace Scripting
@@ -7,9 +9,16 @@ namespace Scripting
 	{
 		static Guid _IID_IUnknown = Guid.Parse(@"00000000-0000-0000-C000-000000000046");
 		IActiveScript _inner;
+		_GlobalDictionary _globals;
 		internal ScriptEngine(IActiveScript inner)
 		{
 			_inner = inner;
+			_globals = new _GlobalDictionary(this);
+		}
+		public IDictionary<string,object> Globals {
+			get {
+				return _globals;
+			}
 		}
 		internal IActiveScript Inner {
 			get { return _inner; }
@@ -93,5 +102,85 @@ namespace Scripting
 			Close();
 		}
 		#endregion
+
+		private sealed class _GlobalDictionary: IDictionary<string, object>
+		{
+			Dictionary<string, object> _inner;
+			WeakReference<ScriptEngine> _outer;
+			internal _GlobalDictionary(ScriptEngine outer)
+			{
+				_outer = new WeakReference<ScriptEngine>(outer);
+				_inner = new Dictionary<string, object>(StringComparer.InvariantCulture);
+			}
+			public object this[string key] { get => _inner[key]; set => _inner[key] = value; }
+
+			public ICollection<string> Keys => _inner.Keys;
+
+			public ICollection<object> Values => _inner.Values;
+
+			public int Count => _inner.Count;
+
+			public bool IsReadOnly => false;
+
+			public void Add(string key, object value)
+			{
+				ScriptEngine outer;
+				if(_outer.TryGetTarget(out outer))
+				{
+					outer.Inner.AddNamedItem(key, (uint)(SCRIPTITEMFLAGS.SCRIPTITEM_NOCODE | SCRIPTITEMFLAGS.SCRIPTITEM_ISVISIBLE));
+				}
+				_inner.Add(key, value);
+			}
+
+			void ICollection<KeyValuePair<string,object>>.Add(KeyValuePair<string, object> item)
+			{
+				Add(item.Key, item.Value);
+			}
+
+			public void Clear()
+			{
+				_inner.Clear();
+			}
+
+			bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> item)
+			{
+				return (_inner as ICollection<KeyValuePair<string, object>>).Contains(item);
+			}
+
+			public bool ContainsKey(string key)
+			{
+				return _inner.ContainsKey(key);
+			}
+
+			public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
+			{
+				(_inner as ICollection < KeyValuePair<string, object> >).CopyTo(array, arrayIndex);
+			}
+
+			public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
+			{
+				return _inner.GetEnumerator();
+			}
+
+			public bool Remove(string key)
+			{
+				return _inner.Remove(key);
+			}
+
+			bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> item)
+			{
+				return (_inner as ICollection<KeyValuePair<string, object>>).Remove(item);
+			}
+
+			public bool TryGetValue(string key, out object value)
+			{
+				return _inner.TryGetValue(key, out value);
+			}
+
+			IEnumerator IEnumerable.GetEnumerator()
+			{
+				return _inner.GetEnumerator();
+			}
+		}
 	}
 }
